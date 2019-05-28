@@ -9,6 +9,15 @@ class User < ApplicationRecord
   def self.generate_session_token
     SecureRandom::urlsafe_base64(16)
   end
+  
+  def self.find_by_credentials(email, password)
+    user = User.find_by(email: email)
+    if user && user.is_password?(password)
+      return user
+    else
+      return nil
+    end
+  end
 
   def password=(password)
     @password = password
