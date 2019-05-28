@@ -1,4 +1,9 @@
 class UsersController < ApplicationController
+  def show
+    @user = User.find_by(session_token: session[:session_token])
+    render :show
+  end
+
   def new
     @user = User.new
     render :new

@@ -1,0 +1,23 @@
+<div>
+  <h1>Login</h1>
+  <form action="<%= session_url %>" method="POST">
+    <div>
+      <label for="email">Email</label>
+      <input type="text"
+        id="email"
+        name="user[email]"
+        value="<%= @user.email %>">
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password"
+        id="password"
+        name="user[password]"
+        value="<%= @user.password %>">
+    </div>
+    <div>
+      <input type="submit"
+        value="Login">
+    </div>
+  </form>
+</div>
