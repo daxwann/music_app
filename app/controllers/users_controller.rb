@@ -1,7 +1,13 @@
 class UsersController < ApplicationController
+  before_action :redirect_user!, only: [:new, :create]
+  before_action :require_login!, only: [:show]
+
   def show
-    @user = User.find_by(session_token: session[:session_token])
-    render :show
+    if current_user.id == params[:id].to_i
+      render :show
+    else
+      redirect_to user_url(current_user)
+    end
   end
 
   def new
@@ -13,9 +19,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save!
-      session_token = @user.reset_session_token!
-      session[:session_token] = session_token
-      redirect_to bands_url
+      login_user!(@user) 
+      redirect_to user_url(@user)
     else
       render :new
     end

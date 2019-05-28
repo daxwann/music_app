@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :redirect_user!, only: [:new, :create]
+  
   def new
     @user = User.new
     render :new
@@ -12,7 +14,7 @@ class SessionsController < ApplicationController
     if @user
       session_token = @user.reset_session_token!
       session[:session_token] = session_token
-      redirect_to bands_url
+      redirect_to user_url(@user)
     else
       @user = User.new(
         params[:user][:email],
@@ -23,8 +25,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    @user.reset_session_token!
-    session[:session_token] = nil
-    redirect_to bands_url
+    logout_user!
+    redirect_to new_session_url
   end
 end
