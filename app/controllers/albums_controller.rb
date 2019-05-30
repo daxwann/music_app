@@ -18,6 +18,7 @@ class AlbumsController < ApplicationController
 
   def create
     @album = Album.new(album_params)
+    @bands = Band.all
 
     if @album.save
       redirect_to album_url(@album)
@@ -44,7 +45,7 @@ class AlbumsController < ApplicationController
       redirect_to bands_url
     end
 
-    if @album.update_attributes(band_params)
+    if @album.update_attributes(album_params)
       redirect_to album_url(@album)
     else
       render :edit

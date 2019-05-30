@@ -1,3 +1,40 @@
+<% albums = @band.albums.order(year: :desc) %>
+
 <div>
   <h1><%= @band.name %></h1>
+  <div>
+    <a href="<%= edit_band_url(@band) %>">Edit Band</a>
+  </div>
+  <div>
+    <form action="<%= band_url(@band) %>" method="POST">
+      <%= auth_token %>
+      <input type="hidden"
+        name="_method"
+        value="delete">
+      <input type="submit"
+        value="Delete Band">
+    </form>
+  </div>
+  <% unless albums.empty? %>
+    <h2>Albums</h2>
+    <table>
+      <tr>
+        <th>Year</th>
+        <th>Title</th>
+      </tr>
+      <% albums.each do |album| %>
+        <tr>
+          <td>
+            <%= album.year %>
+          </td>
+          <td>
+            <a href="<%= album_url(album) %>"><%= album.title %></a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  <div>
+    <a href="<%= new_band_album_url(@band) %>">Add Album</a>
+  </div>
 </div>
