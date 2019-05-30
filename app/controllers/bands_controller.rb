@@ -1,4 +1,19 @@
 class BandsController < ApplicationController
+  def index
+    @bands = Band.all
+    render :index
+  end
+
+  def show
+    @band = Band.find_by(id: params[:id])
+
+    if @band
+      render :show
+    else
+      redirect_to bands_url
+    end
+  end
+
   def new
     @band = Band.new
     render :new
@@ -27,7 +42,7 @@ class BandsController < ApplicationController
   def update
     @band = Band.find_by(id: params[:id])
 
-    if @band.update_attribute!(band_params)
+    if @band.update_attributes(band_params)
       redirect_to band_url(@band)
     else
       render :edit

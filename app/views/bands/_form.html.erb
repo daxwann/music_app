@@ -1,0 +1,21 @@
+<% band_exist = band.persisted? %>
+
+<form action="<%= band_exist ? band_url(band) : bands_url %>" method="POST">
+  <%= auth_token %>
+  <% if band_exist %>
+    <input type="hidden"
+      name="_method"
+      value="patch">
+  <% end %>
+  <div>
+    <label for="name">Name</label>
+    <input type="text"
+      id="name"
+      name="band[name]"
+      value="<%= band.name %>">
+  </div>
+  <div>
+    <input type="submit"
+      value="<%= band_exist ? 'Edit' : 'Create' %>">
+  </div>
+</form>
