@@ -10,12 +10,7 @@ class AlbumsController < ApplicationController
   end
 
   def new
-    @band = Band.find_by(id: params[:band_id])
-
-    unless @band
-      redirect_to bands_url
-    end
-
+    @bands = Band.all
     @album = Album.new(band_id: params[:band_id])
 
     render :new
@@ -33,6 +28,7 @@ class AlbumsController < ApplicationController
 
   def edit
     @album = Album.find_by(id: params[:id])
+    @bands = Band.all
 
     if @album
       render :edit
