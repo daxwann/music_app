@@ -6,4 +6,8 @@ class Band < ApplicationRecord
     foreign_key: :band_id,
     class_name: :Album,
     dependent: :destroy
+
+  has_many :tracks,
+    through: :albums,
+    source: :tracks
 end
