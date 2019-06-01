@@ -1,4 +1,6 @@
 class TracksController < ApplicationController
+  before_action :require_login!
+
   def new
     @track = Track.new(album_id: params[:album_id])
     @albums = Album.all

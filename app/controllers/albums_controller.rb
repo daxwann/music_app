@@ -1,4 +1,6 @@
 class AlbumsController < ApplicationController
+  before_action :require_login!
+
   def show
     @album = Album.find_by(id: params[:id])
     

@@ -3,17 +3,38 @@
   <p>Band: <a href="<%= band_url(@album.band_id) %>"><%= @album.band.name %></a></p>
   <p>Year: <%= @album.year %></p>
   <p>Recording Type: <%= @album.live ? 'Live' : 'Studio' %></p>
-  <div>
-    <a href="<%= edit_album_url %>">Edit Album</a>
-  </div>
-  <div>
-    <form action="<%= album_url(@album) %>" method="POST">
-      <%= auth_token %>
-      <input type="hidden"
-        name="_method"
-        value="delete">
-      <input type="submit"
-        value="Delete Album">
-    </form>
-  </div>
+</div>
+<div>
+  <a href="<%= edit_album_url %>">Edit Album</a>
+</div>
+<div>
+  <form action="<%= album_url(@album) %>" method="POST">
+    <%= auth_token %>
+    <input type="hidden"
+      name="_method"
+      value="delete">
+    <input type="submit"
+      value="Delete Album">
+  </form>
+</div>
+<div>
+  <h2>Tracks</h2>
+  <% tracks = @album.tracks.order(:ord) %>
+  <% unless tracks.empty? %>
+    <table>
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+      </tr>
+      <% tracks.each do |track| %>
+        <tr>
+          <td><%= track.ord %></td>
+          <td><a href="<%= track_url(track) %>"><%= track.title %></a></td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p>No tracks</p>
+  <% end %>
+  <a href="<%= new_album_track_url(@album) %>">Add Track</a>
 </div>
