@@ -1,0 +1,22 @@
+<div>
+  <h1>Track</h1>
+  <p>Title: <%= @track.title %></p>
+  <p>Album: <a href="<%= album_url(@track.album_id) %>"><%= @track.album.title %></a></p>
+  <p>Track Number: <%= @track.ord %></p>
+  <p>Track Type: <%= @track.bonus ? 'Bonus' : 'Regular' %></p>
+  <p>Lyrics:</p>
+  <p><%= @track.lyrics || 'N/A' %></p>
+</div>
+<div>
+  <a href="<%= edit_track_url(@track) %>">Edit Track</a>
+</div>
+<div>
+  <form action="<%= track_url(@track) %>" method="POST">
+    <%= auth_token %>
+    <input type="hidden"
+      name="_method"
+      value="delete">
+    <input type="submit"
+      value="Delete Track">
+  </form>
+</div>

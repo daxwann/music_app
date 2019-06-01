@@ -1,0 +1,47 @@
+<% track_exist = track.persisted? %>
+
+<form action="<%= track_exist ? track_url(track) : tracks_url %>" method="POST">
+  <%= auth_token %>
+  <% if track_exist %>
+    <input type="hidden"
+      name="_method"
+      value="patch">
+  <% end %>
+
+  <div>
+    <label for="track_title">Title</label>
+    <input type="text"
+      id="track_title"
+      name="track[title]"
+      value="<%= track.title %>">
+  </div>
+
+  <div>
+    <label for="track_album">Album</label>
+    <select id="track_album" name="track[album_id]">
+      <option disabled <%= 'selected' if track.album_id.nil? %>>--Select Album--</option>
+      <% albums.each do |album| %>
+        <option value="<%= album.id %>" <%= 'selected' if album.id == track.album_id %>><%= album.title %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div>
+    <label for="track_ord">Track Number</label>
+    <input type="number"
+      id="track_ord"
+      name="track[ord]"
+      value="<%= track.ord %>">
+  </div>
+
+  <div>
+    <label for="track_lyrics">Lyrics</label>
+    <br>
+    <textarea id="track_lyrics" name="track[lyrics]"><%= track.lyrics %></textarea>
+  </div>
+
+  <div>
+    <input type="submit"
+      value="<%= track_exist ? 'Edit' : 'Create' %>">
+  </div>
+</form>
