@@ -21,6 +21,7 @@ class TracksController < ApplicationController
 
   def show
     @track = Track.find_by(id: params[:id])
+    @note = Note.new
 
     if @track
       render :show

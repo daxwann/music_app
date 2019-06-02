@@ -1,0 +1,25 @@
+<div>
+  <h2>Notes</h2>
+  <% notes = track.notes.order(created_at: :desc) %>
+  <% unless notes.empty? %>
+    <% notes.each do |note| %>
+      <div>
+        <p><%= note.content %></p>
+        <p>By: <%= note.user.email %></p>
+        <% if note.user_id == current_user.id %>
+          <form action="<%= note_url(note) %>" method="POST">
+            <%= auth_token %>
+            <input type="hidden"
+              name="_method"
+              value="delete">
+            <input type="submit"
+              value="Delete Note">
+          </form>
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No notes</p>
+  <% end %>
+</div>
+
