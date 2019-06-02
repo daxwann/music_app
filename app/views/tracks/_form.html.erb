@@ -1,5 +1,5 @@
 <% track_exist = track.persisted? %>
-
+<%= render 'shared/errors' %>
 <form action="<%= track_exist ? track_url(track) : tracks_url %>" method="POST">
   <%= auth_token %>
   <% if track_exist %>

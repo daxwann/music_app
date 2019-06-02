@@ -5,7 +5,7 @@
   <p>Track Number: <%= @track.ord %></p>
   <p>Track Type: <%= @track.bonus ? 'Bonus' : 'Regular' %></p>
   <p>Lyrics:</p>
-  <p><%= @track.lyrics || 'N/A' %></p>
+  <p><%= ugly_lyrics(@track.lyrics) || 'N/A' %></p>
 </div>
 <div>
   <a href="<%= edit_track_url(@track) %>">Edit Track</a>

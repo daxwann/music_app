@@ -1,5 +1,5 @@
 <% album_exist = album.persisted? %>
-
+<%= render 'shared/errors' %>
 <form action="<%= album_exist ? album_url(album) : albums_url %>" method="POST">
   <%= auth_token %>
   <% if album_exist %>

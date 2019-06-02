@@ -7,6 +7,7 @@ class AlbumsController < ApplicationController
     if @album
       render :show
     else
+      flash.now[:errors] = ["Album does not exist"]
       redirect_to bands_url
     end
   end
@@ -25,6 +26,7 @@ class AlbumsController < ApplicationController
     if @album.save
       redirect_to album_url(@album)
     else
+      flash.now[:errors] = @album.errors.full_messages
       render :new
     end
   end
@@ -36,6 +38,7 @@ class AlbumsController < ApplicationController
     if @album
       render :edit
     else
+      flash.now[:errors] = ["Album does not exist"]
       redirect_to bands_url
     end
   end
@@ -44,12 +47,14 @@ class AlbumsController < ApplicationController
     @album = Album.find_by(id: params[:id])
 
     unless @album
+      flash.now[:errors] = ["Album does not exist"]
       redirect_to bands_url
     end
 
     if @album.update_attributes(album_params)
       redirect_to album_url(@album)
     else
+      flash.now[:errors] = @album.errors.full_messages
       render :edit
     end
   end

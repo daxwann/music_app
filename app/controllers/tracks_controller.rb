@@ -15,6 +15,7 @@ class TracksController < ApplicationController
     if @track.save
       redirect_to track_url(@track)
     else
+      flash.now[:errors] = @track.errors.full_messages
       render :new
     end
   end
@@ -26,6 +27,7 @@ class TracksController < ApplicationController
     if @track
       render :show
     else
+      flash.now[:errors] = ["Track does not exist"]
       redirect_to bands_url
     end
   end
@@ -37,6 +39,7 @@ class TracksController < ApplicationController
     if @track
       render :edit
     else
+      flash.now[:errors] = ["Track does not exist"]
       redirect_to bands_url
     end
   end
@@ -48,7 +51,8 @@ class TracksController < ApplicationController
     if @track.update_attributes(track_params)
       redirect_to track_url(@track)
     else
-      redirect_to bands_url
+      flash.now[:errors] = @track.errors.full_messages
+      render :edit
     end
   end
 

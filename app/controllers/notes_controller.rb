@@ -8,6 +8,7 @@ class NotesController < ApplicationController
     if @note.save
       redirect_to track_url(@note.track_id)
     else
+      flash.now[:errors] = @note.errors.full_messages
       @track = Track.find_by(id: params[:note][:track_id])
       render 'tracks/show' 
     end
@@ -20,7 +21,7 @@ class NotesController < ApplicationController
       @note.destroy
       redirect_to track_url(track_id)
     else
-      render(text: "Unauthorized user", status: 403)
+      render plain: "Unauthorized user", status: 403
     end 
   end
 

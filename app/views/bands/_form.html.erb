@@ -1,5 +1,5 @@
 <% band_exist = band.persisted? %>
-
+<%= render 'shared/errors' %>
 <form action="<%= band_exist ? band_url(band) : bands_url %>" method="POST">
   <%= auth_token %>
   <% if band_exist %>

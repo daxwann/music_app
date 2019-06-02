@@ -1,4 +1,5 @@
 <div>
+  <%= render 'shared/errors' %>
   <form action="<%= notes_url %>" method="POST">
     <%= auth_token %>
     <input type="hidden"
