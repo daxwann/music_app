@@ -16,7 +16,7 @@ class User < ApplicationRecord
   def self.generate_unique_session_token
     token = SecureRandom::urlsafe_base64(16)
 
-    while self.class.exists?(session_token: token)
+    while User.exists?(session_token: token)
       token = SecureRandom::urlsafe_base64(16)
     end
 
@@ -26,7 +26,7 @@ class User < ApplicationRecord
   def self.generate_unique_activation_token
     token = SecureRandom::urlsafe_base64(16)
     
-    while self.class.exists?(activation_token: token)
+    while User.exists?(activation_token: token)
       token = SecureRandom::urlsafe_base64(16)
     end
 
