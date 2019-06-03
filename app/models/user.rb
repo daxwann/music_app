@@ -13,12 +13,24 @@ class User < ApplicationRecord
     class_name: :Note,
     dependent: :destroy
 
-  def self.generate_session_token
-    SecureRandom::urlsafe_base64(16)
+  def self.generate_unique_session_token
+    token = SecureRandom::urlsafe_base64(16)
+
+    while self.class.exists?(session_token: token)
+      token = SecureRandom::urlsafe_base64(16)
+    end
+
+    token
   end
 
-  def self.generate_activation_token
-    SecureRandom::urlsafe_base64(16)
+  def self.generate_unique_activation_token
+    token = SecureRandom::urlsafe_base64(16)
+    
+    while self.class.exists?(activation_token: token)
+      token = SecureRandom::urlsafe_base64(16)
+    end
+
+    token
   end
   
   def self.find_by_credentials(email, password)
@@ -42,31 +54,20 @@ class User < ApplicationRecord
   end
 
   def reset_session_token!
-    self.ensure_session_token
+    self.session_token = User.generate_unique_session_token
     self.save!
     self.session_token
   end
 
   def ensure_session_token
-    until self.valid_session_token?
-      self.session_token = User.generate_session_token
-    end
+    self.session_token ||= User.generate_unique_session_token
   end
 
   def ensure_activation_token
-    until self.valid_activation_token?
-      self.activation_token = User.generate_activation_token
-    end
+    self.activation_token = User.generate_unique_activation_token
   end
 
-  def valid_session_token?
-    return true if self.valid?
-    return false if self.errors.include?(:session_token)
-    true
-  end
-
-  def valid_activation_token?
-    return true if self.valid?
-    return false if self.errors.include?(:activation_token)
+  def activate!
+    self.update_attribute(:activated, true)
   end
 end

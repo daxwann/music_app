@@ -19,12 +19,21 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save!
-      login_user!(@user) 
-      redirect_to user_url(@user)
+      ActivationMailer.activation_email(@user).deliver_now!
+      flash[:notice] = "Your account has been created. Check your email to activate your account"
+      redirect_to new_session_url
     else
       flash.now[:errors] = @user.errors.full_messages
       render :new
     end
+  end
+
+  def activate
+    @user = User.find_by(activation_token: params[:activation_token])
+    @user.activate!
+    login_user!(@user)
+    flash[:notice] = "Successfully activated your account"
+    redirect_to user_url(@user)
   end
 
   private

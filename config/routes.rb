@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :users, only: [:show, :new, :create]
+  resources :users, only: [:show, :new, :create] do
+    get :activate, on: :collection
+  end
 
   resource :session, only: [:new, :create, :destroy]
 

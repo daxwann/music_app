@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
   def login_user!(user)
+    return unless user.activated
     token = user.reset_session_token!
     session[:session_token] = token
   end

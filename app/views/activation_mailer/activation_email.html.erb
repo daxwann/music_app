@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Activation Email</title>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome <%= @user.email %></h1>
+    </header>
+    <main>
+      <p>Thank you for signing up!</p>
+      <p>Please activate your account by visiting this link:</p>
+      <p><a href="<%= activate_users_url(activation_token: @user.activation_token) %>">Activate</a></p>
+      <p>If you're unable to click the link above, copy and paste the URL into your browser:</p>
+      <p><%= activate_users_url(activation_token: @user.activation_token) %></p>
+      <p>See you soon!</p>
+    </main>
+  </body>
+</html>
