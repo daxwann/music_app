@@ -2,9 +2,10 @@ class User < ApplicationRecord
   attr_reader :password
 
   validates :password_digest, presence: true
-  validates :email, :session_token, presence: true, uniqueness: true
+  validates :activated, inclusion: { in: [true, false] }
+  validates :email, :session_token, :activation_token, presence: true, uniqueness: true
   validates :password, length: { minimum: 6 }, allow_nil: true
-  after_initialize :ensure_session_token
+  after_initialize :ensure_session_token, :ensure_activation_token
 
   has_many :notes,
     primary_key: :id,
@@ -13,6 +14,10 @@ class User < ApplicationRecord
     dependent: :destroy
 
   def self.generate_session_token
+    SecureRandom::urlsafe_base64(16)
+  end
+
+  def self.generate_activation_token
     SecureRandom::urlsafe_base64(16)
   end
   
@@ -48,9 +53,20 @@ class User < ApplicationRecord
     end
   end
 
+  def ensure_activation_token
+    until self.valid_activation_token?
+      self.activation_token = User.generate_activation_token
+    end
+  end
+
   def valid_session_token?
     return true if self.valid?
     return false if self.errors.include?(:session_token)
     true
+  end
+
+  def valid_activation_token?
+    return true if self.valid?
+    return false if self.errors.include?(:activation_token)
   end
 end
