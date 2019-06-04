@@ -9,22 +9,15 @@ module ApplicationHelper
 
   def ugly_lyrics(lyrics)
     note = "&#9835; "
-    uglified = "<pre>"
+    formatted_lyrics = ""
 
     return if lyrics.nil?
 
     escaped_lyrics = html_escape(lyrics)
-    uglified += note
-    escaped_lyrics.each_char do |char|
-      unless char == "\n"
-        uglified += char
-      else
-        uglified += "</pre>\n<pre>"
-        uglified += note
-      end
+    escaped_lyrics.lines.each do |line|
+      formatted_lyrics << note + line
     end
-    uglified += "<\pre>"
 
-    return uglified.html_safe
+    return "<pre>#{formatted_lyrics}</pre>".html_safe
   end
 end
