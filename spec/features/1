@@ -1,0 +1,4 @@
+require 'rails_helper'
+
+feature "user features", type: :feature do
+end

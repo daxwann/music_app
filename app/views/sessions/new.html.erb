@@ -1,6 +1,8 @@
 <div>
   <h1>Login</h1>
   <%= render 'shared/errors' %>
+  <%= render 'shared/notice' %>
+
   <form action="<%= session_url %>" method="POST">
     <%= auth_token %>
     <div>

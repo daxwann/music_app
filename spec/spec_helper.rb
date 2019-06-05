@@ -94,3 +94,13 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+# shared helper methods
+
+def sign_up_user(email, password)
+  visit new_user_url
+  fill_in "email", with: email
+  fill_in "password", with: password
+  click_on "Create User"
+end
+
