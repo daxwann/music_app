@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    if @user.save!
+    if @user.save
       ActivationMailer.activation_email(@user).deliver_now!
       flash[:notice] = "Your account has been created. Check your email to activate your account"
       redirect_to new_session_url

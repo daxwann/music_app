@@ -67,6 +67,7 @@ group :test do
   gem 'faker'
   gem 'launchy'
   gem 'guard-rspec'
+  gem 'rails-controller-testing'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

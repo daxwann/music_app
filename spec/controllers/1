@@ -1,0 +1,18 @@
+require 'rails_helper'
+
+RSpec.describe UsersController, type: :controller do
+  describe "GET #new" do
+    it "renders the new template"
+  end
+
+  describe "POST #create" do
+    context "with invalid params" do
+      it "validates the presence of the user's email and password"
+      it "validates that the password is at least 6 characters"
+      it "renders edit page"
+    end
+
+    context "with valid params" do
+    end
+  end
+end
